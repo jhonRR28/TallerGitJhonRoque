@@ -29,6 +29,7 @@
     </div>
     <script>
         let resultadoLetras = "";
+        let resultadoEng = "";
 
         function numeroALetras(numero) {
             const unidades = ["cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"];
@@ -46,6 +47,25 @@
             }
         }
 
+        function numeroAIngles(numero) {
+            const ones = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+            const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+            const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+            const thousands = ["", "thousand"];
+
+            if (numero < 10) {
+                return ones[numero];
+            } else if (numero < 20) {
+                return teens[numero - 10];
+            } else if (numero < 100) {
+                return tens[Math.floor(numero / 10)] + (numero % 10 ? "-" + ones[numero % 10] : "");
+            } else if (numero < 1000) {
+                return ones[Math.floor(numero / 100)] + " hundred" + (numero % 100 ? " and " + numeroAIngles(numero % 100) : "");
+            } else {
+                return "Number out of range";
+            }
+        }
+
         function traducir() {
             const numero = parseInt(document.getElementById('numero').value);
             if (isNaN(numero)) {
@@ -57,6 +77,13 @@
             document.getElementById('resultado').innerText = `${resultadoLetras}`; 
         }
 
+        function traducirIngles() {
+            if (resultadoLetras === "") {
+                document.getElementById('resultadoIngles').innerText = "Primero, traduzca el número a español.";
+            } else {
+                document.getElementById('resultadoIngles').innerText = resultadoEng;
+            }
+        }
     </script>
 </body>
 </html>
